@@ -61,8 +61,6 @@ async def predict(item: Item):
 
     ### Request Body
     - `symptom1`: string
-    - `symptom2`: string
-    - `symptom3`: string
 
     ### Response
     - `strain_recommendation`: list of strain names
