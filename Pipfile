@@ -16,6 +16,9 @@ fastapi = "*"
 pandas = "*"
 uvicorn = "*"
 plotly = "*"
+sklearn = "*"
+spacy = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"
