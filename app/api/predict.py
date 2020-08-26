@@ -17,7 +17,7 @@ router = APIRouter()
 df = pd.read_csv('toking.csv')
 
 
-def search_func(user_input):
+def search_func(user_input, num_results=5):
 
     user_input = [user_input]
     nlp=English()
@@ -26,7 +26,8 @@ def search_func(user_input):
     dtm = tf.fit_transform(df['search'])
     dtm = pd.DataFrame(dtm.todense(), columns=tf.get_feature_names())
 
-    nn = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
+    nr = num_results
+    nn = NearestNeighbors(n_neighbors=nr, algorithm='ball_tree')
     nn.fit(dtm)
     dtf = tf.transform(user_input)
     _, output = nn.kneighbors(dtf.todense())
@@ -47,7 +48,8 @@ def search_func(user_input):
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    symptom1: str = Field(..., example='insomnia')
+    symptoms: str = Field(..., example='insomnia')
+    results: int = Field(..., example=5)
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
@@ -60,11 +62,12 @@ async def predict(item: Item):
     Make a baseline strain recommendation.
 
     ### Request Body
-    - `symptom1`: string
+    - `symptoms`: string
+    - `results`: int
 
     ### Response
     - `strain_recommendation`: list of strain names
     """
     X_new = item.to_df()
     log.info(X_new)
-    return {'recommendations': search_func(item.symptom1)}
+    return {'recommendations': search_func(item.symptoms, item.results)}
