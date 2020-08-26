@@ -8,28 +8,31 @@ Original file is located at
 """
 
 import pandas as pd
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
 
 
 
 
-df2 = pd.read_csv('https://raw.githubusercontent.com/kushyapp/cannabis-dataset/master/Dataset/Strains/strains-kushy_api.2017-11-14.csv')
+df2 = pd.read_csv('''
+ https://raw.githubusercontent.com/calebmckay1/Unit-1-Build/master/toking.csv
+                  ''')
 
 med = df2[df2['ailment'].isnull()==False]
 med = med.reset_index()
-med = med[['name','type','effects','ailment','flavor']]
+med = med[['name','type','flavors','positive_effects','ailment','search']]
 
 
 
-def strain_finder(request,outputs=10):
+def strain_finder(request, outputs=10, category='ailment'):
   """Accepts input string and integer for number of outputs
+  requires a string input of either name, type, flavors, positive_effects, or 
+  ailment. 
   Returns a list of tuples of strings"""
   input = [request]
   tfidf = TfidfVectorizer(stop_words='english')
 
-  ttm = tfidf.fit_transform(med['ailment'])
+  ttm = tfidf.fit_transform(med[category])
 
   ttm = pd.DataFrame(ttm.todense(), columns=tfidf.get_feature_names())
 
@@ -38,8 +41,11 @@ def strain_finder(request,outputs=10):
   encoded = tfidf.transform(input)
   result =[]
   for item in nn.kneighbors(encoded.todense())[1][0]:
-    info = (('name', med['name'][item]), ('type', med['type'][item]), ('effects',(med['effects'][item])),
-            ('ailments', (med['ailment'][item])), ('flavors',med['flavor'][item]))
+    info = (('name', med['name'][item]), ('type', med['type'][item]), 
+            ('positive_effects',(med['effects'][item])),
+            ('ailments', (med['ailment'][item])),
+            ('flavors',med['flavors'][item])
+            )
     result.append(info)
   return result
 
