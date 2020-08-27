@@ -1,3 +1,22 @@
+The model is a fuzzy search NLP that goes through all the text in the data we sourced from an API. The results will look through all kinds of information and check against the input text to find all matches. We also have a more precise model which can search by column for specific searches.
+
+- The fuzzy model uses spacy tokenization and tfidf to perform the vectorization followed by nearest neighbors with ball tree to perform the search.
+
+- the precise search utilizes only tfidf for tokenization and vectorization it uses kd_tree and nearest neighbors for the search but focuses on only one column from the dataset.
+
+
+
+
+
+
+
+
+
+
+
+
+# We are keeping the how to guide just in case someone still needs it.
+
 # DS Build Week scaffold
 
 - [Big picture](#big-picture)
