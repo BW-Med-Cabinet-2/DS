@@ -1,3 +1,4 @@
+"""File for initializing visual effects. UNUSED BUT NEEDED"""
 from fastapi import APIRouter, HTTPException
 import pandas as pd
 import plotly.express as px
