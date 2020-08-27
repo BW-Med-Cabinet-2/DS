@@ -18,6 +18,7 @@ def test_valid_input():
     assert response.status_code == 200
     assert item.symptoms in body['recommendations']
     assert len(body['recommendations']) >= item.results
+    assert 0 < item.results
 
 
 def test_invalid_input():
