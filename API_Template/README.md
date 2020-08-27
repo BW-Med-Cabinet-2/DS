@@ -1,4 +1,4 @@
-## Predict.py has been updated from the base Fast API template. 
+### Predict.py has been updated from the base Fast API template. 
 
 - Predict.py now contains the flexible search function from model_create_for_app.py which can be found in the models_and_data folder of DS. This function allows us to search our Csv file for strains of cannabis that a user might be interested in. 
 
