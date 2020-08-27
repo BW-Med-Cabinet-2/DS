@@ -42,7 +42,7 @@ def strain_finder(request, outputs=10, category='ailment'):
   result =[]
   for item in nn.kneighbors(encoded.todense())[1][0]:
     info = (('name', med['name'][item]), ('type', med['type'][item]), 
-            ('positive_effects',(med['effects'][item])),
+            ('positive_effects',(med['positive_effects'][item])),
             ('ailments', (med['ailment'][item])),
             ('flavors',med['flavors'][item])
             )
