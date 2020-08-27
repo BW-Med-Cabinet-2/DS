@@ -1,6 +1,6 @@
 """
-Predict.py contains the functions and post/get requests nessecary for the API to take inputs and return 
-outputs relevant to the data being searched.
+Predict.py contains the functions and post/get requests nessecary for
+the API to take inputs and return outputs relevant to the data being searched.
 """
 
 import logging
@@ -25,17 +25,16 @@ df = pd.read_csv('toking.csv')
 def search_func(user_input, num_results=5):
     """
     Flexible function that searches for cannabis strains.
-    
+
     ### Request Body
     - user_input str
     - num_results int: default 5
-
     ### Response
     - `strain_recommendation`: dictionary of strain recommendations
     """
 
     user_input = [user_input]
-    nlp=English()
+    nlp = English()
     tokenizer = Tokenizer(nlp.vocab)
     tf = TfidfVectorizer(stop_words='english')
     dtm = tf.fit_transform(df['search'])
@@ -47,15 +46,14 @@ def search_func(user_input, num_results=5):
     dtf = tf.transform(user_input)
     _, output = nn.kneighbors(dtf.todense())
 
-
     recommendations = []
     for n in output:
         for row in n:
             recommendations.append(row)
 
-    result=[]
+    result = []
     for i in recommendations:
-        data=(df.loc[i,:])
+        data = (df.loc[i, :])
         result.append(data)
     return {'strain_recommendations': result}
 
@@ -75,11 +73,9 @@ class Item(BaseModel):
 async def predict(item: Item):
     """
     Make a baseline strain recommendation.
-
     ### Request Body
     - `symptoms`: string
     - `results`: int
-
     ### Response
     - `strain_recommendation`: dictionary of strain names
     """
