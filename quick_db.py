@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 import pandas as pd
 
-engine = create_engine("postgres://wuzxngxn:g4YPfv7O48ZkAMbbX7_D1FYlFj6sZJux@lallah.db.elephantsql.com:5432/wuzxngxn")
+engine = create_engine("postgres://USER:PASSWORD@SERVER:5432/USER")
 df = pd.read_csv('toking.csv')
 df.to_sql("strains", con=engine) 
