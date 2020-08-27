@@ -22,13 +22,13 @@ router = APIRouter()
 df = pd.read_csv('toking.csv')
 
 
-def search_func(user_input, num_results=5):
+def search_func(user_input, num_results=10):
     """
     Flexible function that searches for cannabis strains.
 
     ### Request Body
     - user_input str
-    - num_results int: default 5
+    - num_results int: default 10
     ### Response
     - `strain_recommendation`: dictionary of strain recommendations
     """
@@ -62,7 +62,7 @@ class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
     symptoms: str = Field(..., example='insomnia')
-    results: int = Field(..., example=5)
+#    results: int = Field(..., example=5)
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
@@ -81,4 +81,4 @@ async def predict(item: Item):
     """
     X_new = item.to_df()
     log.info(X_new)
-    return {'recommendations': search_func(item.symptoms, item.results)}
+    return {'recommendations': search_func(item.symptoms, 10)}
