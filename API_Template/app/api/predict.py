@@ -1,3 +1,8 @@
+"""
+Predict.py contains the functions and post/get requests nessecary for the API to take inputs and return 
+outputs relevant to the data being searched.
+"""
+
 import logging
 import random
 
