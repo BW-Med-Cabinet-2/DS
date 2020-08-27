@@ -18,6 +18,16 @@ df = pd.read_csv('toking.csv')
 
 
 def search_func(user_input, num_results=5):
+    """
+    Flexible function that searches for cannabis strains.
+    
+    ### Request Body
+    - user_input str
+    - num_results int: default 5
+
+    ### Response
+    - `strain_recommendation`: dictionary of strain recommendations
+    """
 
     user_input = [user_input]
     nlp=English()
@@ -66,7 +76,7 @@ async def predict(item: Item):
     - `results`: int
 
     ### Response
-    - `strain_recommendation`: list of strain names
+    - `strain_recommendation`: dictionary of strain names
     """
     X_new = item.to_df()
     log.info(X_new)
